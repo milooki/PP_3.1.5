@@ -26,7 +26,7 @@ function fillTable(users) {
             <button class="btn btn-info"
                     data-bs-toggle="modal"
                     data-bs-target="#editModal"
-                    onclick="editModal(${user.id})">
+                    onclick="event.preventDefault(); editModal(${user.id})">
                 Update
             </button>
             </th>
@@ -34,7 +34,7 @@ function fillTable(users) {
             <button class="btn btn-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#delModal"
-                    onclick="delModal(${user.id})">
+                    onclick="event.preventDefault(); delModal(${user.id})">
                 Delete
             </button>
         </th>
@@ -92,7 +92,8 @@ async function editUser() {
         },
         body: JSON.stringify(user)
     }).then(() => {
-        setTimeout(getAllUsers, 500);
+        $('#editModal').modal('hide');
+        getAllUsers();
     })
 }
 
@@ -141,6 +142,7 @@ async function deleteUser() {
         },
         body: JSON.stringify(user)
     }).then(() => {
+        $('#delModal').modal('hide');
         getAllUsers()
     })
 }
@@ -175,4 +177,11 @@ async function addUser() {
     }).then(() => {
         getAllUsers()
     })
+}
+function clearAndHideAddForm() {
+    document.getElementById("addFirstName").value = "";
+    document.getElementById("addLastName").value = "";
+    document.getElementById("addEmail").value = "";
+    document.getElementById("addPassword").value = "";
+    document.getElementById("addRoles").value = "option1";
 }
