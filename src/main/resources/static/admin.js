@@ -175,6 +175,7 @@ async function addUser() {
         },
         body: JSON.stringify(user)
     }).then(() => {
+        clearAndHideAddForm();
         getAllUsers()
     })
 }
